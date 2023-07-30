@@ -2,107 +2,107 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Test Firebase Auth</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Firebase Auth</title>
 
-	<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
-	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 
-	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
 
-	<!-- Add Firebase products that you want to use -->
-	<!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> -->
-	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
+  <!-- Add Firebase products that you want to use -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
 
-	<script>
-		// STOCK RECOMMENDATION
-		// const firebaseConfig = {
-		// 	apiKey: "AIzaSyDYQiEnBOmE2uU5SaLEQAIt0l-9V7dV1a4",
-		// 	authDomain: "stock-recommendation-dev.firebaseapp.com",
-		// 	projectId: "stock-recommendation-dev",
-		// 	storageBucket: "stock-recommendation-dev.appspot.com",
-		// 	messagingSenderId: "54631176241",
-		// 	appId: "1:54631176241:web:b0d8a0fa5614e504de5d10",
-		// 	measurementId: "G-JLGGLMV0K1"
-		// };
+  <script>
+    // STOCK RECOMMENDATION
+    // const firebaseConfig = {
+    // 	apiKey: "AIzaSyDYQiEnBOmE2uU5SaLEQAIt0l-9V7dV1a4",
+    // 	authDomain: "stock-recommendation-dev.firebaseapp.com",
+    // 	projectId: "stock-recommendation-dev",
+    // 	storageBucket: "stock-recommendation-dev.appspot.com",
+    // 	messagingSenderId: "54631176241",
+    // 	appId: "1:54631176241:web:b0d8a0fa5614e504de5d10",
+    // 	measurementId: "G-JLGGLMV0K1"
+    // };
 		const firebaseConfig = {
-  apiKey: "AIzaSyB2MYfk6VJhWyRvRbK0JWv3yiFOoB5H96o",
-  authDomain: "logistics-smart-86cd4.firebaseapp.com",
-  projectId: "logistics-smart-86cd4",
-  storageBucket: "logistics-smart-86cd4.appspot.com",
-  messagingSenderId: "345140081195",
-  appId: "1:345140081195:web:259f59240c8bec9c85306e",
-  measurementId: "G-Z7EZ3CY049"
-};
+			apiKey: "AIzaSyBj3zU59AC13jiaaH4PWI7nu2M6H6TX5YE",
+			authDomain: "tsmart-34432.firebaseapp.com",
+			projectId: "tsmart-34432",
+			storageBucket: "tsmart-34432.appspot.com",
+			messagingSenderId: "443819365089",
+			appId: "1:443819365089:web:debc86f832708908181da0",
+			measurementId: "G-FKMN1N85LM"
+		};
 
 
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
-		firebase.initializeApp(firebaseConfig);
-	</script>
-
-	<script src="https://www.gstatic.com/firebasejs/ui/5.0.0/firebase-ui-auth.js"></script>
-	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/5.0.0/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/ui/5.0.0/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/5.0.0/firebase-ui-auth.css" />
 </head>
 
 <body>
-	<!-- The surrounding HTML is left untouched by FirebaseUI.
-     Your app may use that space for branding, controls and other customizations.-->
-	<h1>Welcome to My Awesome App</h1>
-	<div id="firebaseui-auth-container"></div>
-	<div id="loader">Loading...</div>
+<!-- The surrounding HTML is left untouched by FirebaseUI.
+   Your app may use that space for branding, controls and other customizations.-->
+<h1>Welcome to My Awesome App</h1>
+<div id="firebaseui-auth-container"></div>
+<div id="loader">Loading...</div>
 
-	<input type="text" id="i" placeholder="id token">
-	<script defer>
-		const messaging = firebase.messaging();
+<input type="text" id="i" placeholder="id token">
+<script defer>
+  const messaging = firebase.messaging();
 
-		// Get registration token. Initially this makes a network call, once retrieved
-		// subsequent calls to getToken will return from cache.
-		messaging.getToken({ vapidKey: 'BLqSs5cqFv2IpNgchCfWULuMR7rOlIjzFjSBBpLccKjcQ-b7DuEjS-6HyVx2ZW7ZORFytDzr0w-hLeBJP4GDRHA' }).then((currentToken) => {
-			if (currentToken) {
-				// Send the token to your server and update the UI if necessary
-				// ...
-				console.log(currentToken + ' sent to server');
-				subscribeTokenToTopic(currentToken, "noti");
-			} else {
-				// Show permission request UI
-				console.log('No registration token available. Request permission to generate one.');
-				// ...
-			}
-		}).catch((err) => {
-			console.log('An error occurred while retrieving token. ', err);
-			// ...
-		});
+  // Get registration token. Initially this makes a network call, once retrieved
+  // subsequent calls to getToken will return from cache.
+  messaging.getToken({ vapidKey: "BLqSs5cqFv2IpNgchCfWULuMR7rOlIjzFjSBBpLccKjcQ-b7DuEjS-6HyVx2ZW7ZORFytDzr0w-hLeBJP4GDRHA" }).then((currentToken) => {
+    if (currentToken) {
+      // Send the token to your server and update the UI if necessary
+      // ...
+      console.log(currentToken + " sent to server");
+      subscribeTokenToTopic(currentToken, "noti");
+    } else {
+      // Show permission request UI
+      console.log("No registration token available. Request permission to generate one.");
+      // ...
+    }
+  }).catch((err) => {
+    console.log("An error occurred while retrieving token. ", err);
+    // ...
+  });
 
-		// Handle incoming messages. Called when:
-		// - a message is received while the app has focus
-		// - the user clicks on an app notification created by a service worker
-		//   `messaging.onBackgroundMessage` handler.
-		messaging.onMessage((payload) => {
-			console.log('Message received. ', payload);
-			// ...
-		});
-		function subscribeTokenToTopic(token, topic) {
-			fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/${topic}`, {
-				method: 'POST',
-				headers: new Headers({
-					Authorization: `key=AAAAR03Tgkk:APA91bH0zrmjjmFcbyujEmEvBSFA4WABrheNXmqeHhRHp2ZH3Bdm_lBUg7Ot3E8fiFITdMcJc1R_nQDGRrw3DJMA7wtj_iA4jYvnR3XDnIGHT1YWVxmBxOTYiUVX47PwEltNy2P6KHkF`
-				})
-			})
-				.then((response) => {
-					if (response.status < 200 || response.status >= 400) {
-						console.log(response.status, response);
-					}
-					console.log(`"${topic}" is subscribed`);
-				})
-				.catch((error) => {
-					console.error(error.result);
-				});
-			return true;
-		}
-	</script>
+  // Handle incoming messages. Called when:
+  // - a message is received while the app has focus
+  // - the user clicks on an app notification created by a service worker
+  //   `messaging.onBackgroundMessage` handler.
+  messaging.onMessage((payload) => {
+    console.log("Message received. ", payload);
+    // ...
+  });
+
+  function subscribeTokenToTopic(token, topic) {
+    fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/${topic}`, {
+      method: "POST",
+      headers: new Headers({
+        Authorization: `key=AAAAR03Tgkk:APA91bH0zrmjjmFcbyujEmEvBSFA4WABrheNXmqeHhRHp2ZH3Bdm_lBUg7Ot3E8fiFITdMcJc1R_nQDGRrw3DJMA7wtj_iA4jYvnR3XDnIGHT1YWVxmBxOTYiUVX47PwEltNy2P6KHkF`
+      })
+    })
+      .then((response) => {
+        if (response.status < 200 || response.status >= 400) {
+          console.log(response.status, response);
+        }
+        console.log(`"${topic}" is subscribed`);
+      })
+      .catch((error) => {
+        console.error(error.result);
+      });
+    return true;
+  }
+</script>
 
 </html>

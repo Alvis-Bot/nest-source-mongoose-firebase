@@ -69,7 +69,7 @@ Date.prototype.toFormat = function(format: string) {
   });
 };
 Date.prototype.compare = function(date: Date) {
-  let d1 = new Date(this.getFullYear(), this.getMonth(), this.getDate());
-  let d2 = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  return d1.getTime() - d2.getTime() > 0 ? 1 : d1.getTime() - d2.getTime() < 0 ? -1 : 0;
-};
+  const d1 = new Date(this.getFullYear(), this.getMonth(), this.getDate());
+  const d2 = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  return d1.getTime() - d2.getTime();
+}

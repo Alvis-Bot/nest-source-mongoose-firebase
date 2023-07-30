@@ -16,9 +16,7 @@ export class SwaggerConfig {
 		const document = SwaggerModule.createDocument(app, options);
 		SwaggerModule.setup("api", app, document ,{
 			 swaggerOptions: {
-				 swaggerOptions: {
 					 persistAuthorization: true,
-				 },
 			 }
 		});
 	}

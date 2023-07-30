@@ -2,9 +2,9 @@
 <html lang="vi">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <title>Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Login</title>
 </head>
 <link rel="stylesheet" media="all" href="./styles.css?v=1.0.6" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -13,107 +13,107 @@
 <!-- Add Firebase products that you want to use -->
 <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
 <script>
-    $(document).ready(function () {
-        const firebaseConfig = {
-  apiKey: "AIzaSyB2MYfk6VJhWyRvRbK0JWv3yiFOoB5H96o",
-  authDomain: "logistics-smart-86cd4.firebaseapp.com",
-  projectId: "logistics-smart-86cd4",
-  storageBucket: "logistics-smart-86cd4.appspot.com",
-  messagingSenderId: "345140081195",
-  appId: "1:345140081195:web:259f59240c8bec9c85306e",
-  measurementId: "G-Z7EZ3CY049"
-};
+  $(document).ready(function() {
+      const firebaseConfig = {
+          apiKey: "AIzaSyBj3zU59AC13jiaaH4PWI7nu2M6H6TX5YE",
+          authDomain: "tsmart-34432.firebaseapp.com",
+          projectId: "tsmart-34432",
+          storageBucket: "tsmart-34432.appspot.com",
+          messagingSenderId: "443819365089",
+          appId: "1:443819365089:web:debc86f832708908181da0",
+          measurementId: "G-FKMN1N85LM"
+      };
 
-        firebase.initializeApp(firebaseConfig);
-        var provider = new firebase.auth.FacebookAuthProvider();
-        firebase.auth().languageCode = 'vi';
-        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-            'size': 'small',
-            'callback': function (response) {
-                if ($('#confirm').is(":checked")) {
-                    document.getElementById("phone-login").disabled = false;
-                }
-            },
-            'expired-callback': function () {
-                // Response expired. Ask user to solve reCAPTCHA again.
-                // ...
-            }
-        });
-        recaptchaVerifier.render().then(function (widgetId) {
-            window.recaptchaWidgetId = widgetId;
-        });
-        firebase.auth().getRedirectResult().then(function (result) {
-            var user = result.user;
-            user.getIdToken()
-                .then(function (token) {
-                    return auth(token)
-                })
-                .catch(function (reason) {
-                    alert(reason.toString())
-                })
-        }).catch(function (error) {
-
-        }).finally(function () {
-            $("#loading").hide();
-        });
-        $("#phone-login").click(function (event) {
-            event.preventDefault();
-            console.log('begin');
-            var phoneNumber = document.getElementById("input-phone").value;
-            console.log(phoneNumber);
-            var appVerifier = window.recaptchaVerifier;
-            $("#loading").show();
-            firebase.auth().signInWithPhoneNumber('+84' + phoneNumber, appVerifier)
-                .then(function (confirmationResult) {
-                    // SMS sent. Prompt user to type the code from the message, then sign the
-                    // user in with confirmationResult.confirm(code).
-                    window.confirmationResult = confirmationResult;
-                    $(".confirm-code").show();
-                    $(".login-item").hide();
-                }).catch(function (error) {
-                    grecaptcha.reset(window.recaptchaWidgetId);
-                    alert('Số điện thoại không đúng');
-                    // Error; SMS not sent
-                    // ...
-                }).finally(function () {
-                    $("#loading").hide();
-                });
-        });
-        $("#facebook-login").click(function (event) {
-            event.preventDefault();
-            firebase.auth().signInWithRedirect(provider);
-        });
-
-        $("#confirm-code").click(function () {
-            var code = document.getElementById("input-code").value;
-            $("#loading").show();
-            confirmationResult.confirm(code).then(function (result) {
-                // User signed in successfully.
-                var user = result.user;
-                user.getIdToken()
-                    .then(function (token) {
-                        console.log(token);
-                        alert("bật f12 để xem token");
-                        //return auth(token)
-                    })
-                // ...
-            }).catch(function (error) {
-                alert('Sai mã xác nhận');
-            }).finally(function () {
-                $("#loading").hide();
-            });
-        });
-        $('input[name=confirm]').change(function () {
-            if ($(this).is(':checked')) {
-                var response = grecaptcha.getResponse();
-                if (response.length !== 0) {
-                    document.getElementById("phone-login").disabled = false;
-                }
-            } else {
-                document.getElementById("phone-login").disabled = true;
-            }
-        });
+    firebase.initializeApp(firebaseConfig);
+    var provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().languageCode = "vi";
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+      "size": "small",
+      "callback": function(response) {
+        if ($("#confirm").is(":checked")) {
+          document.getElementById("phone-login").disabled = false;
+        }
+      },
+      "expired-callback": function() {
+        // Response expired. Ask user to solve reCAPTCHA again.
+        // ...
+      }
     });
+    recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+    });
+    firebase.auth().getRedirectResult().then(function(result) {
+      var user = result.user;
+      user.getIdToken()
+        .then(function(token) {
+          return auth(token);
+        })
+        .catch(function(reason) {
+          alert(reason.toString());
+        });
+    }).catch(function(error) {
+
+    }).finally(function() {
+      $("#loading").hide();
+    });
+    $("#phone-login").click(function(event) {
+      event.preventDefault();
+      console.log("begin");
+      var phoneNumber = document.getElementById("input-phone").value;
+      console.log(phoneNumber);
+      var appVerifier = window.recaptchaVerifier;
+      $("#loading").show();
+      firebase.auth().signInWithPhoneNumber("+84" + phoneNumber, appVerifier)
+        .then(function(confirmationResult) {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          window.confirmationResult = confirmationResult;
+          $(".confirm-code").show();
+          $(".login-item").hide();
+        }).catch(function(error) {
+        grecaptcha.reset(window.recaptchaWidgetId);
+        alert("Số điện thoại không đúng");
+        // Error; SMS not sent
+        // ...
+      }).finally(function() {
+        $("#loading").hide();
+      });
+    });
+    $("#facebook-login").click(function(event) {
+      event.preventDefault();
+      firebase.auth().signInWithRedirect(provider);
+    });
+
+    $("#confirm-code").click(function() {
+      var code = document.getElementById("input-code").value;
+      $("#loading").show();
+      confirmationResult.confirm(code).then(function(result) {
+        // User signed in successfully.
+        var user = result.user;
+        user.getIdToken()
+          .then(function(token) {
+            console.log(token);
+            alert("bật f12 để xem token");
+            //return auth(token)
+          });
+        // ...
+      }).catch(function(error) {
+        alert("Sai mã xác nhận");
+      }).finally(function() {
+        $("#loading").hide();
+      });
+    });
+    $("input[name=confirm]").change(function() {
+      if ($(this).is(":checked")) {
+        var response = grecaptcha.getResponse();
+        if (response.length !== 0) {
+          document.getElementById("phone-login").disabled = false;
+        }
+      } else {
+        document.getElementById("phone-login").disabled = true;
+      }
+    });
+  });
 
 
 </script>
@@ -313,7 +313,7 @@
         -webkit-text-size-adjust: 100%
     }
 
-    @media only screen and (max-width:992px) {
+    @media only screen and (max-width: 992px) {
         body {
             background: #f4f8fb
         }
@@ -410,7 +410,7 @@
         font-size: 1.0rem
     }
 
-    @media only screen and (max-width:349px) {
+    @media only screen and (max-width: 349px) {
         .btn.btn--m {
             height: 38px;
             line-height: 38px;
@@ -529,7 +529,7 @@
         margin: 0 auto 18px
     }
 
-    @media only screen and (max-width:575px) {
+    @media only screen and (max-width: 575px) {
         .header h1 a {
             width: 60px;
             height: 60px
@@ -565,7 +565,7 @@
         font-weight: 400
     }
 
-    @media only screen and (max-width:575px) {
+    @media only screen and (max-width: 575px) {
         .header h2 {
             margin-bottom: 15px;
             font-size: 1.125em;
@@ -573,7 +573,7 @@
         }
     }
 
-    @media only screen and (max-width:349px) {
+    @media only screen and (max-width: 349px) {
         .header h2 {
             padding: 0 20px
         }
@@ -618,7 +618,7 @@
         padding: 30px 45px
     }
 
-    @media only screen and (max-width:349px) {
+    @media only screen and (max-width: 349px) {
         .body .body-container .form-signin {
             padding: 24px 12px
         }
@@ -716,7 +716,7 @@
         border-top: 5px solid #888
     }
 
-    @media only screen and (max-width:575px) {
+    @media only screen and (max-width: 575px) {
         .body .body-container .form-signin .line-form.has-flag .select-flag .tf:before {
             top: 13px;
             right: 7px
@@ -795,7 +795,7 @@
         border-bottom: 1px solid #aaa
     }
 
-    @media only screen and (max-width:992px) {
+    @media only screen and (max-width: 992px) {
         .body .body-container .form-signin .line-form.has-flag .select-flag {
             font-size: 93.8%
         }
@@ -827,7 +827,7 @@
         border-radius: 3px
     }
 
-    @media only screen and (max-width:992px) {
+    @media only screen and (max-width: 992px) {
         .body .body-container p.first {
             background-color: #fff
         }
@@ -842,7 +842,7 @@
         text-decoration: underline
     }
 
-    @media only screen and (max-width:992px) {
+    @media only screen and (max-width: 992px) {
         .body .body-container .link {
             font-size: .938em
         }
@@ -871,7 +871,7 @@
         width: 100%;
     }
 
-    @media only screen and (max-width:992px) {
+    @media only screen and (max-width: 992px) {
         .body .body-container {
             background: 0 0;
             min-height: auto;
@@ -909,7 +909,7 @@
         }
     }
 
-    @media only screen and (max-width:992px) {
+    @media only screen and (max-width: 992px) {
         .body .body-container {
             padding: 0 6px
         }
@@ -975,7 +975,7 @@
         list-style-type: none
     }
 
-    .fa-ul>li {
+    .fa-ul > li {
         position: relative
     }
 
@@ -1196,67 +1196,68 @@
 </style>
 
 <body>
-    <div class="loading" id="loading">Loading...</div>
-    <div class="header">
-        <!-- <h1><a class="logo" style="cursor: auto;"></a></h1> -->
-        <h2 class="hide-on-med-and-down">Sign in with account</h2>
-        <p>By signing in, you are authorizing Google to access your devices</p>
-    </div>
-    <div class="body">
-        <div class="body-container">
-            <div class="content">
-                <div>
-                    <div style="margin-top: 0;">
-                        <div class="form-signin">
-                            <div>
-                                <div>
-                                    <p class="login-type">Sign in with phone number</p>
-                                    <div class="space"></div>
-                                    <div class="line-form has-ico has-flag">
-                                        <div><i class="fa fa-mobile"></i>
-                                            <div class="select-flag"><span class="tf">+84</span>
-                                                <div class="dropdown-flag hidden">
-                                                    <ul>
-                                                        <li class="selected"><span
-                                                                class="flag flag-vn"></span><span><strong>Vietnam</strong>
+<div class="loading" id="loading">Loading...</div>
+<div class="header">
+  <!-- <h1><a class="logo" style="cursor: auto;"></a></h1> -->
+  <h2 class="hide-on-med-and-down">Sign in with account</h2>
+  <p>By signing in, you are authorizing Google to access your devices</p>
+</div>
+<div class="body">
+  <div class="body-container">
+    <div class="content">
+      <div>
+        <div style="margin-top: 0;">
+          <div class="form-signin">
+            <div>
+              <div>
+                <p class="login-type">Sign in with phone number</p>
+                <div class="space"></div>
+                <div class="line-form has-ico has-flag">
+                  <div><i class="fa fa-mobile"></i>
+                    <div class="select-flag"><span class="tf">+84</span>
+                      <div class="dropdown-flag hidden">
+                        <ul>
+                          <li class="selected"><span
+                            class="flag flag-vn"></span><span><strong>Vietnam</strong>
                                                                 <em>+84</em></span></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <input id="input-phone" tabindex="1" type="tel" name="phone_num" maxlength="10"
-                                            autocomplete="off" placeholder="Phone number" class="input">
-                                    </div>
-                                    <div class="confirm-code line-form has-ico">
-                                        <div><i class="fa fa-link"></i>
-                                        </div>
-                                        <input maxlength="6" id="input-code" tabindex="1" type="tel" name="phone_num"
-                                            autocomplete="off" placeholder="Confirm code" class="input">
-                                    </div>
-                                    <div id="recaptcha-container" class="captcha login-item"></div>
-                                    <div class="space"></div>
-                                    <div class="small">
-                                        <input type="checkbox" id="confirm" checked name="confirm" value="confirm">
-                                        Agree to <a href="https://thomi.com.vn/thomi-terms-of-service/">Terms of
-                                            Service</a>, <a href="https://thomi.com.vn/thomi-privacy-policy/">Privacy
-                                            Policy</a>
-                                    </div>
-                                    <div class="space"></div>
-                                    <button id="confirm-code" class="confirm-code btn btn--m first">Sign In</button>
-                                    <div class="login-item">
-                                        <button id="phone-login" class="btn btn--m block first" disabled>Sign
-                                            In</button>
-                                    </div>
-                                    <div class="space"></div>
-                                    <div class="space"></div>
-                                </div>
-                            </div>
-                        </div>
+                        </ul>
+                      </div>
                     </div>
+                  </div>
+                  <input id="input-phone" tabindex="1" type="tel" name="phone_num" maxlength="10"
+                         autocomplete="off" placeholder="Phone number" class="input">
                 </div>
+                <div class="confirm-code line-form has-ico">
+                  <div><i class="fa fa-link"></i>
+                  </div>
+                  <input maxlength="6" id="input-code" tabindex="1" type="tel" name="phone_num"
+                         autocomplete="off" placeholder="Confirm code" class="input">
+                </div>
+                <div id="recaptcha-container" class="captcha login-item"></div>
+                <div class="space"></div>
+                <div class="small">
+                  <input type="checkbox" id="confirm" checked name="confirm" value="confirm">
+                  Agree to <a href="https://thomi.com.vn/thomi-terms-of-service/">Terms of
+                  Service</a>, <a href="https://thomi.com.vn/thomi-privacy-policy/">Privacy
+                  Policy</a>
+                </div>
+                <div class="space"></div>
+                <button id="confirm-code" class="confirm-code btn btn--m first">Sign In</button>
+                <div class="login-item">
+                  <button id="phone-login" class="btn btn--m block first" disabled>Sign
+                    In
+                  </button>
+                </div>
+                <div class="space"></div>
+                <div class="space"></div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 
 
 </body>

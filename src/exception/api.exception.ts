@@ -1,10 +1,11 @@
 import { HttpException } from "@nestjs/common";
-import { IError } from "./exception.interface";
+import { IError } from "../common/interface";
 
 export class ApiException extends HttpException {
 	code: string;
-	constructor(error: IError) {
+	constructor(error: IError, message?: string) {
 		super(error.message, error.status);
+		this.message = message || error.message;
 		this.code = error.code;
 	}
 }
