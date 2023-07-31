@@ -14,6 +14,7 @@ import { validationSchema } from "./common/config/validation";
 import { RolesGuard } from "./auth/guard/roles.guard";
 import { ImagesModule } from './images/images.module';
 import { MulterModule } from "@nestjs/platform-express";
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -26,11 +27,17 @@ import { MulterModule } from "@nestjs/platform-express";
       rootPath: join(__dirname, '..', '..' , 'public'),
       serveRoot: '/public',
     }),
-    ServeStaticModule.forRoot({
-     // ảnh nằm trong thư mục uploads và trong uploads có ảnh và  có thư mục images có chứa ảnh t muốn nó chung serverRoot là /images
-      rootPath: join(__dirname, '..', '..', 'uploads'),
-      serveRoot: '/images',
-      renderPath: '/images',
+    ServeStaticModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return [
+          {
+            rootPath: join(__dirname, '..', '..', configService.get<string>('FOLDER_UPLOAD')),
+            serveRoot: '/',
+          },
+        ];
+      },
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -45,6 +52,7 @@ import { MulterModule } from "@nestjs/platform-express";
     FirebaseModule,
     PublicModule,
     ImagesModule,
+    StorageModule,
 
   ],
   providers: [

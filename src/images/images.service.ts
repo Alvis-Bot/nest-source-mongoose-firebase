@@ -3,8 +3,6 @@ import { ConfigService } from "@nestjs/config";
 import * as fs from "fs";
 import { FileTypes } from "../common/enum";
 import { join } from "path";
-import { ApiException } from "../exception/api.exception";
-import { ErrorCode, ErrorMessages } from "../exception/error.code";
 
 @Injectable()
 export class  ImagesService implements OnModuleInit  {
@@ -39,18 +37,8 @@ export class  ImagesService implements OnModuleInit  {
     return join(folderUpload, fileName);
   }
 
-
-
-
   async deleteImage(fileName: string): Promise<void> {
-        const filePath = await this.buildImageFilePath(fileName);
-        // kiểm tra file có tồn tại không
-        //   if (!fs.existsSync(filePath)) {
-        //        throw new ApiException(ErrorMessages.FILE_NOT_FOUND);
-        //   }
-        // xóa file
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-        }
-    }
+    const filePath = await this.buildImageFilePath(fileName);
+    fs.existsSync(filePath) && fs.unlinkSync(filePath);
+  }
 }

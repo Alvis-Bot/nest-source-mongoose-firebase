@@ -7,4 +7,7 @@ export class UserMultiFileUploadDto {
 
     @ApiProperty({ type: 'string', format: 'binary' , required: true , isArray: true })
     files: Express.Multer.File[];
+
+    @ApiProperty()
+    name: string;
 }

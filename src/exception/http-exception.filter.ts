@@ -1,13 +1,4 @@
-import {
-  ArgumentsHost,
-  BadRequestException,
-  Catch,
-  ExceptionFilter,
-  ForbiddenException,
-  HttpException,
-  HttpStatus,
-  UnauthorizedException
-} from "@nestjs/common";
+import { ArgumentsHost, BadRequestException, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
 import { ApiException } from "./api.exception";
 import { Response } from "express";
 

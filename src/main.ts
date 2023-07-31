@@ -30,7 +30,7 @@ async function bootstrap() {
   );
   CorsConfig.enableCors(app);
   app.setGlobalPrefix("api", { exclude: [""] });
-  app.useGlobalPipes(new ParseFilesPipe());
+  // app.useGlobalPipes(new ParseFilesPipe());
   // khi chay dev và test thi se hien thi swagger
   if (configService.get<string>("NODE_ENV") === "dev") {
     SwaggerConfig.init(app);
